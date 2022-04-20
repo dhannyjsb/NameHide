@@ -2,6 +2,7 @@ package codes.zucker.NameHide;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,7 +19,7 @@ public class Utils { // some nice utils
         for(int x = location.getBlockX() - radius; x <= location.getBlockX() + radius; x++) {
             for(int y = location.getBlockY() - radius; y <= location.getBlockY() + radius; y++) {
                 for(int z = location.getBlockZ() - radius; z <= location.getBlockZ() + radius; z++) {
-                   blocks.add(location.getWorld().getBlockAt(x, y, z));
+                   blocks.add(Objects.requireNonNull(location.getWorld()).getBlockAt(x, y, z));
                 }
             }
         }
@@ -39,7 +40,7 @@ public class Utils { // some nice utils
         }
     }
 
-    
+
     static Material[] NeighborBlacklist = new Material[] {
         Material.WATER,
         Material.LAVA,
@@ -171,22 +172,17 @@ public class Utils { // some nice utils
             dirTemp.multiply(-1);
             eyeTemp.add(dirTemp);
             Block at = eyeTemp.getBlock();
-            if (at != null) {
-                boolean found = false;
-                for(String s : blacklist)
-                if (at.getType().toString().contains(s) && !at.getType().toString().contains("BLOCK")) {
-                    found = true;
-                    break;
-                }
-                if (!found)
-                    return false;
+            boolean found = false;
+            for(String s : blacklist)
+            if (at.getType().toString().contains(s) && !at.getType().toString().contains("BLOCK")) {
+                found = true;
+                break;
             }
+            if (!found)
+                return false;
 
             //locs[i] = eyeTemp;
         }
-        /*for(Location loc : locs) { 
-            loc.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, loc, 1);
-        }*/
         return true;
     }
 }

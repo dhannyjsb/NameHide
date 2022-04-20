@@ -8,7 +8,7 @@ import java.util.UUID;
 
 import net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy;
 import net.minecraft.world.entity.decoration.EntityArmorStand;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 public class PlayerStand {
@@ -24,16 +24,15 @@ public class PlayerStand {
         this.owner = owner;
         this.target = target;
         this.stand = stand;
-        if(Stands.get(owner.getUniqueId()) == null)
-        Stands.put(owner.getUniqueId(), new ArrayList<PlayerStand>());
+        Stands.computeIfAbsent(owner.getUniqueId(), k -> new ArrayList<PlayerStand>());
         List<PlayerStand> list = Stands.get(owner.getUniqueId());
         list.add(this);
         Stands.put(owner.getUniqueId(), list);
     }
 
     public void Remove() {
-        PacketPlayOutEntityDestroy destroy = new PacketPlayOutEntityDestroy(stand.getId());
-        ((CraftPlayer)owner).getHandle().b.sendPacket(destroy);
+        PacketPlayOutEntityDestroy destroy = new PacketPlayOutEntityDestroy(stand.ae());
+        ((CraftPlayer)owner).getHandle().b.a(destroy);
         List<PlayerStand> list = Stands.get(owner.getUniqueId());
         list.remove(this);
         Stands.put(owner.getUniqueId(), list);

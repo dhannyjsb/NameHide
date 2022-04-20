@@ -1,4 +1,4 @@
 main: codes.zucker.NameHide.Main
-name: NameHide
-version: 1.6
+name: NameHide-NMS
+version: 1.7
 api-version: 1.17

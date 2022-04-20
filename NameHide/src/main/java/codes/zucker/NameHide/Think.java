@@ -11,11 +11,10 @@ import net.minecraft.network.protocol.game.PacketPlayOutSpawnEntity;
 import net.minecraft.network.syncher.DataWatcher;
 import net.minecraft.world.entity.decoration.EntityArmorStand;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_18_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
@@ -27,7 +26,13 @@ public class Think implements Runnable {
 
 
     static ScoreboardManager manager = Bukkit.getScoreboardManager();
-    static Scoreboard board = manager.getNewScoreboard();
+    static Scoreboard board;
+
+    static {
+        assert manager != null;
+        board = manager.getNewScoreboard();
+    }
+
     Team t = board.registerNewTeam("defaultTeam");
     boolean sneakHidesName = (boolean)ConfigurationLoader.GetValue("sneakHidesName");
     int hideNameDistance = (int)ConfigurationLoader.GetValue("sneakHideDistance");
@@ -41,7 +46,7 @@ public class Think implements Runnable {
             t.addEntry(p.getName());
             p.setScoreboard(board);
     
-            List<Player> visiblePlayers = new ArrayList<Player>();
+            List<Player> visiblePlayers = new ArrayList<>();
 
             List<Entity> entList = p.getNearbyEntities(50, 50, 50);
             for (Entity ent : entList) {
@@ -59,7 +64,7 @@ public class Think implements Runnable {
                 }
             }
 
-            List<UUID> allPlayerSees = new ArrayList<UUID>();
+            List<UUID> allPlayerSees = new ArrayList<>();
             if (PlayerStand.Stands.get(p.getUniqueId()) != null)
                 for(PlayerStand stand : PlayerStand.Stands.get(p.getUniqueId()))
                     allPlayerSees.add(stand.target.getUniqueId());
@@ -73,24 +78,24 @@ public class Think implements Runnable {
                     offset = 1.4f;
                 if (id == null) {
                     EntityArmorStand stand = new EntityArmorStand(((CraftWorld)p.getWorld()).getHandle().getMinecraftWorld(), pos.getX(), pos.getY() + offset, pos.getZ());
-                    stand.setInvisible(true);
-                    stand.setCustomName(IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + pl.getName() + "\"}"));
-                    stand.setCustomNameVisible(true);
-                    stand.setMarker(true);
+                    stand.j(true);
+                    stand.a(IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + pl.getName() + "\"}"));
+                    stand.n(true);
+                    stand.t(true);
     
                     PacketPlayOutSpawnEntity packet = new PacketPlayOutSpawnEntity(stand);
-                    ((CraftPlayer)p).getHandle().b.sendPacket(packet);
+                    ((CraftPlayer)p).getHandle().b.a(packet);
     
-                    DataWatcher watcher = stand.getDataWatcher();
-                    PacketPlayOutEntityMetadata data = new PacketPlayOutEntityMetadata(stand.getId(), watcher, false);
-                    ((CraftPlayer)p).getHandle().b.sendPacket(data);
+                    DataWatcher watcher = stand.ai();
+                    PacketPlayOutEntityMetadata data = new PacketPlayOutEntityMetadata(stand.ae(), watcher, false);
+                    ((CraftPlayer)p).getHandle().b.a(data);
     
                     new PlayerStand(p, pl, stand);
                     
                 } else {
-                    id.setLocation(pos.getX(), pos.getY() + offset, pos.getZ(), 0, 0);
+                    id.a(pos.getX(), pos.getY() + offset, pos.getZ(), 0, 0);
                     PacketPlayOutEntityTeleport posPacket = new PacketPlayOutEntityTeleport(id);
-                    ((CraftPlayer)p).getHandle().b.sendPacket(posPacket);
+                    ((CraftPlayer)p).getHandle().b.a(posPacket);
                 }
             }
 

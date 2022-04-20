@@ -5,10 +5,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>codes.zucker.NameHide</groupId>
-	<artifactId>NameHide</artifactId>
-	<version>1.6</version>
+	<artifactId>NameHide-NMS</artifactId>
+	<version>1.7</version>
 
-	<name>NameHide</name>
+	<name>NameHide-NMS</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,21 +27,25 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.13.1</version>
+			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.17.1-R0.1-SNAPSHOT</version>
+			<version>1.18.2-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
-			<artifactId>bukkit</artifactId>
-			<version>1.17.1-R0.1-SNAPSHOT</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/craftbukkit-1.17.1.jar</systemPath>
+			<artifactId>craftbukkit</artifactId>
+			<version>1.18.2-R0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>minecraft-server</artifactId>
+			<version>1.18.1-R0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
