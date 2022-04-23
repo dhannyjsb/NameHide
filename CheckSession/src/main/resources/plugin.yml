@@ -1,0 +1,4 @@
+name: CheckSession
+version: '${project.version}'
+main: com.github.hungang.checksession.CheckSession
+api-version: 1.15
