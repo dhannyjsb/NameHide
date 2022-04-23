@@ -53,6 +53,7 @@ public class Think implements Runnable {
                 if (!(ent instanceof Player)) continue;
                 Player pl = (Player) ent;
                 if (pl == p) continue;
+              //  Bukkit.getLogger().severe(pl.getName());
                 boolean bottom = Utils.PlayerCanSee(p, pl.getLocation().add(0, 0.5f, 0), sprintShowName && pl.isSprinting());
                 boolean top = Utils.PlayerCanSee(p, pl.getLocation().add(0, 1.8f, 0), sprintShowName && pl.isSprinting());
                 if (pl.isSneaking())
@@ -70,6 +71,7 @@ public class Think implements Runnable {
                     allPlayerSees.add(stand.target.getUniqueId());
 
             for(Player pl : visiblePlayers) {
+                boolean isCitizensNPC = pl.hasMetadata("NPC");
                 allPlayerSees.remove(pl.getUniqueId());
                 EntityArmorStand id = PlayerStand.GetStandEntityForPlayer(p, pl);
                 Vector pos = pl.getLocation().toVector();
@@ -77,6 +79,8 @@ public class Think implements Runnable {
                 if (pl.isSneaking())
                     offset = 1.4f;
                 if (id == null) {
+
+                    if (!isCitizensNPC){
                     EntityArmorStand stand = new EntityArmorStand(((CraftWorld)p.getWorld()).getHandle().getMinecraftWorld(), pos.getX(), pos.getY() + offset, pos.getZ());
                     stand.j(true);
                     stand.a(IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + pl.getName() + "\"}"));
@@ -91,7 +95,7 @@ public class Think implements Runnable {
                     ((CraftPlayer)p).getHandle().b.a(data);
     
                     new PlayerStand(p, pl, stand);
-                    
+                    }
                 } else {
                     id.a(pos.getX(), pos.getY() + offset, pos.getZ(), 0, 0);
                     PacketPlayOutEntityTeleport posPacket = new PacketPlayOutEntityTeleport(id);
