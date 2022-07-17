@@ -6,7 +6,7 @@
 
 	<groupId>codes.zucker.NameHide</groupId>
 	<artifactId>NameHide-NMS</artifactId>
-	<version>1.7.1</version>
+	<version>1.7.2</version>
 
 	<name>NameHide-NMS</name>
 
@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>net.citizensnpcs</groupId>
 			<artifactId>citizens-main</artifactId>
-			<version>2.0.29-SNAPSHOT</version>
+			<version>2.0.30-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
@@ -44,19 +44,19 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.18.2-R0.1-SNAPSHOT</version>
+			<version>1.19-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.18.2-R0.1-SNAPSHOT</version>
+			<version>1.19-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>minecraft-server</artifactId>
-			<version>1.18.1-R0.1-SNAPSHOT</version>
+			<version>1.19-R0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

@@ -8,7 +8,8 @@ import java.util.UUID;
 
 import net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy;
 import net.minecraft.world.entity.decoration.EntityArmorStand;
-import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
+
 import org.bukkit.entity.Player;
 
 public class PlayerStand {
@@ -43,20 +44,29 @@ public class PlayerStand {
             return null;
         for(PlayerStand s : Stands.get(owner.getUniqueId())) {
             if (s != null && target != null)
-            if (s.target.getUniqueId().equals(target.getUniqueId()))
-                return s.stand;
+                if (s.target.getUniqueId().equals(target.getUniqueId()))
+                    return s.stand;
         }
         return null;
     }
 
     public static PlayerStand GetStandForPlayer(Player owner, Player target) {
         if (Stands.get(owner.getUniqueId()) == null)
-        return null;
+            return null;
         for(PlayerStand s : Stands.get(owner.getUniqueId())) {
             if (s != null && target != null)
-            if (s.target.getUniqueId().equals(target.getUniqueId()))
+             if (s.target.getUniqueId().equals(target.getUniqueId()))
                 return s;
         }
         return null;
     }
+    public static PlayerStand GetStandForOwner(Player owner) {
+        if (Stands.get(owner.getUniqueId()) == null)
+            return null;
+        for(PlayerStand s : Stands.get(owner.getUniqueId())) {
+                    return s;
+        }
+        return null;
+    }
+
 }

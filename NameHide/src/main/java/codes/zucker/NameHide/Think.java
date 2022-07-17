@@ -11,8 +11,8 @@ import net.minecraft.network.protocol.game.PacketPlayOutSpawnEntity;
 import net.minecraft.network.syncher.DataWatcher;
 import net.minecraft.world.entity.decoration.EntityArmorStand;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_18_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
@@ -58,6 +58,7 @@ public class Think implements Runnable {
                 boolean top = Utils.PlayerCanSee(p, pl.getLocation().add(0, 1.8f, 0), sprintShowName && pl.isSprinting());
                 if (pl.isSneaking())
                     top = Utils.PlayerCanSee(p, pl.getLocation().add(0, 1.2f, 0), false);
+
                 if (bottom || top) {
                     if (sneakHidesName && pl.isSneaking() && p.getLocation().distance(pl.getLocation()) > hideNameDistance)
                         continue;
@@ -75,6 +76,7 @@ public class Think implements Runnable {
                 allPlayerSees.remove(pl.getUniqueId());
                 EntityArmorStand id = PlayerStand.GetStandEntityForPlayer(p, pl);
                 Vector pos = pl.getLocation().toVector();
+
                 float offset = 1.85f;
                 if (pl.isSneaking())
                     offset = 1.4f;
@@ -83,7 +85,7 @@ public class Think implements Runnable {
                     if (!isCitizensNPC){
                     EntityArmorStand stand = new EntityArmorStand(((CraftWorld)p.getWorld()).getHandle().getMinecraftWorld(), pos.getX(), pos.getY() + offset, pos.getZ());
                     stand.j(true);
-                    stand.a(IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + pl.getName() + "\"}"));
+                    stand.b(IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + pl.getName() + "\"}"));
                     stand.n(true);
                     stand.t(true);
     
@@ -105,9 +107,12 @@ public class Think implements Runnable {
 
             for(UUID uuid : allPlayerSees) {
                 PlayerStand stand = PlayerStand.GetStandForPlayer(p, Bukkit.getPlayer(uuid));
-                if (stand != null)
+                if (stand != null){
                     stand.Remove();
+                    //ukkit.getConsoleSender().sendMessage("§8+-----------------------REMOVE ?" + stand);
+                }
             }
+
         }
     }
 }
